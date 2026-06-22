@@ -3,9 +3,13 @@ name: Node & Docker CI Pipeline
 # Trigger this workflow on every push or pull request to the main branch
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
+      - prod
   pull_request:
-    branches: [main]
+    branches: 
+      - main
+      - prod
 
 jobs:
 # JOB 1: Test and Validate the Node app
@@ -47,6 +51,15 @@ jobs:
         run: |
           echo "REPO_LOWERCASE=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+          else
+            echo "BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
         with:
@@ -65,4 +78,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.REPO_LOWERCASE }}:${{ env.TIMESTAMP }}
-            ghcr.io/${{ env.REPO_LOWERCASE }}:latest
+            ghcr.io/${{ env.REPO_LOWERCASE }}:${{ env.BRANCH }}

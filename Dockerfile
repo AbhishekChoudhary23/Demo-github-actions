@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 # Copy dependency definitions and install them
 COPY package*.json ./
-RUN npm install
+RUN npm install --only=production
 
 # Copy the rest of your application code
 COPY . .

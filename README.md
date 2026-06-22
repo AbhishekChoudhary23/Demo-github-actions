@@ -28,7 +28,7 @@ The automated pipeline is configured via `.github/workflows/ci-pipeline.yml` and
 * Configures **Docker Buildx** to leverage BuildKit features like advanced layer caching.
 * Authenticates securely to `ghcr.io` using an ephemeral, least-privilege `GITHUB_TOKEN`.
 * Converts repository metadata dynamically to strictly lowercase syntax to comply with Docker registry standards.
-* Generates a unique immutable timestamp tag (`YYYYMMDD-HHMMSS`) alongside updating the `latest` tag.
+* Generates a unique, immutable timestamp tag (YYYYMMDD-HHMMSS) alongside syncing the corresponding target branch tag (:main or :prod) to ensure traceability and rolling tracking.
 * Pushes the optimized image layers to the public registry.
 
 ---

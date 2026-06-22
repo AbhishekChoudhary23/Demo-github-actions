@@ -3,9 +3,13 @@ name: Node & Docker CI Pipeline
 # Trigger this workflow on every push or pull request to the main branch
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
+      - prod
   pull_request:
-    branches: [main]
+    branches: 
+      - main
+      - prod
 
 jobs:
 # JOB 1: Test and Validate the Node app
@@ -65,4 +69,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.REPO_LOWERCASE }}:${{ env.TIMESTAMP }}
-            ghcr.io/${{ env.REPO_LOWERCASE }}:latest
+            ghcr.io/${{ env.REPO_LOWERCASE }}:${{ github.ref_name }}

@@ -3,9 +3,9 @@ name: Node & Docker CI Pipeline
 # Trigger this workflow on every push or pull request to the main branch
 on:
   push:
-    branch: [main]
+    branches: [main]
   pull_request:
-    branch: [main]
+    branches: [main]
 
 jobs:
 # JOB 1: Test and Validate the Node app

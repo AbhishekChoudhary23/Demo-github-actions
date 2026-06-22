@@ -51,6 +51,15 @@ jobs:
         run: |
           echo "REPO_LOWERCASE=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+          else
+            echo "BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
         with:
@@ -69,4 +78,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.REPO_LOWERCASE }}:${{ env.TIMESTAMP }}
-            ghcr.io/${{ env.REPO_LOWERCASE }}:${{ github.ref_name }}
+            ghcr.io/${{ env.REPO_LOWERCASE }}:${{ env.BRANCH }}

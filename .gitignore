@@ -1,2 +1,4 @@
 .env
 /node_modules
+run-demo.sh
+cleanup-demo.sh
